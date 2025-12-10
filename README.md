@@ -41,7 +41,7 @@ Follow these instructions to set up and run the project on your local machine.
 Once the setup is complete, start the Flask web server by running:
 
 ```bash
-python main.py
+python run.py
 ```
 
 The application will be available at `http://127.0.0.1:5000` in your web browser.
