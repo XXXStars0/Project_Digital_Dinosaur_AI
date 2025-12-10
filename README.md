@@ -1,47 +1,86 @@
-# Digital Dinosaur AI
+# 🦖 Digital Dinosaur AI
 
-This project is a simple web application built with Python and Flask.
+![Python Version](https://img.shields.io/badge/Python-3.10%20|%203.11%20|%203.12-blue)
+![Framework](https://img.shields.io/badge/Backend-Flask-green)
+![AI](https://img.shields.io/badge/AI-OpenAI%20GPT--4o-orange)
+![Database](https://img.shields.io/badge/Vector%20DB-ChromaDB-purple)
 
-## Getting Started
+## 📖 Project Overview 
 
-Follow these instructions to set up and run the project on your local machine.
+**Digital Dinosaur AI** is an interactive virtual companion powered by Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG). Unlike traditional virtual pets with pre-scripted dialogues, this Dino possesses **long-term memory**, **dynamic personality**, and **emotional intelligence**.
 
-### Prerequisites
+This project demonstrates the integration of **game state management** (Hunger, Mood, Affinity) with **generative AI**, allowing the pet to remember past interactions and react dynamically to the user's care—or neglect.
 
-- Python 3.x
-- A virtual environment tool (like `venv`)
+### ✨ Key Features
+- **🧠 Long-Term Memory (RAG):** Powered by **ChromaDB**, the Dino remembers facts you told it (e.g., your name, favorite food) and references them in future conversations.
+- **🎭 Dynamic Persona:** The AI's tone changes based on game stats (Hunger, Mood, Time of Day). A hungry Dino is grumpy; a well-fed one is cheerful.
+- **🕰️ Simulated Time System:** Includes a Day/Night cycle. Waking the Dino up at night has consequences!
+- **❤️ Relationship Evolution:** Affinity levels determine how intimate or cold the Dino acts towards you.
 
-### Setup
+---
 
-1.  **Activate the Virtual Environment:**
+## ⚠️ Prerequisites 
+Due to dependency compatibility with **ChromaDB** and **NumPy**, this project **strictly requires**:
 
-    The project includes a pre-configured virtual environment in the `.venv` directory. To activate it on Windows, run the following command in your terminal:
+- **Python 3.10, 3.11, or 3.12**
+- ❌ **DO NOT use Python 3.13 or 3.14** (Will cause build errors during installation).
 
-    ```bash
-    .\.venv\Scripts\activate
-    ```
+You also need an **OpenAI API Key**.
 
-2.  **Install Dependencies:**
+---
 
-    All required packages are listed in the `requirements.txt` file. With the virtual environment activated, install them using pip:
+## 🚀 Installation & Setup 
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+Follow these steps to run the project locally.
 
-3.  **API Keys:**
+### 1. Clone the Repository
+```bash
+git clone <YOUR_REPO_URL>
+cd Project_Digital_Dinosaur_AI
+```
+### 2. Create a Virtual Environment (Recommended)
+It is highly recommended to use a virtual environment to manage dependencies.
 
-    An `.env` file has been created for you to store your API keys. Add your keys to this file as needed.
+**Windows:**
 
-    *   **File Path:** `.env`
-    *   **Git Ignore:** The `.gitignore` file is configured to ignore the `.env` and `.venv` directories, ensuring that your keys and local environment settings are not committed to the repository.
+```bash
+# Ensure you are using Python 3.12 or lower
+py -3.12 -m venv .venv
+.venv\Scripts\activate
+```
 
-### Running the Application
+**Mac/Linux:**
 
-Once the setup is complete, start the Flask web server by running:
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+```
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+### 4. Configure Environment Variables
+Create a `.env` file in the root directory and add your OpenAI API Key:
 
+```ini
+# .env file
+API_KEY=your_api_key_here
+BASE_URL=your_base_url_here
+MODEL=your_model_name_here
+```
+
+### 5. Run the Application
 ```bash
 python run.py
 ```
-
 The application will be available at `http://127.0.0.1:5000` in your web browser.
+
+
+## 🛠️ Tech Stack
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript (Fetch API)
+- **Backend:** Python (Flask)
+- **AI Engine:** OpenAI API
+- **Memory/Database:** ChromaDB (Vector Search)
+
+## 👨‍💻 Contributors
+[TODO: Add contributor names and links]

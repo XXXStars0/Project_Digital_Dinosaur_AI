@@ -10,10 +10,7 @@ client = OpenAI(
     base_url=os.getenv("BASE_URL")
 )
 
-def build_system_prompt(state, event_desc):
-    """
-    Constructs the dynamic system prompt based on game state.
-    """
+def build_system_prompt(state, event_desc, memories):
     tone = "Curious and animalistic"
     if state["affinity"] < 20:
         tone = "Wary, aggressive, growling often"
@@ -46,6 +43,10 @@ def build_system_prompt(state, event_desc):
     - Time: {state['time_phase']}
     - Physical: {status_str}
     
+    [RELEVANT MEMORIES]
+    (Things the user said in the past that are related to this topic)
+    {memories}
+    
     [IMMEDIATE CONTEXT]
     The following just happened: "{event_desc}"
     
@@ -57,8 +58,8 @@ def build_system_prompt(state, event_desc):
     """
     return prompt
 
-def get_ai_response(user_input, state, event_desc):
-    system_prompt = build_system_prompt(state, "") 
+def get_ai_response(user_input, state, event_desc, memories=""):
+    system_prompt = build_system_prompt(state, event_desc, memories)
     combined_content = ""
 
     if event_desc:
