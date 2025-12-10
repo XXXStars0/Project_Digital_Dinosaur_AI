@@ -58,13 +58,6 @@ def build_system_prompt(state, event_desc):
     return prompt
 
 def get_ai_response(user_input, state, event_desc):
-    """
-    Main function to get response from LLM.
-    Args:
-        user_input (str): What the user typed.
-        state (dict): The current game stats (hunger, mood, etc).
-        event_desc (str): System description of what just happened (e.g. "User fed you").
-    """
     try:
         # 1. Build the Persona
         system_prompt = build_system_prompt(state, event_desc)
