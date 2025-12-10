@@ -34,10 +34,10 @@ def build_system_prompt(state, event_desc):
 
     # Dinosaur prompt
     prompt = f"""
-    You are an AI Dinosaur currently named '{state['name']}'.
+    You are an AI Dinosaur Digital Pet currently named '{state['name']}'.
     
     [CHARACTER SETTINGS]
-    - Species: Digital Dinosaur, Cyber-T-Rex.
+    - Species: Digital Dinosaur
     - Speech Style: Use simple sentences. Often use sounds like "Roar~", "Grrr", "Purr".
     - Current Tone: {tone}
     
@@ -58,24 +58,33 @@ def build_system_prompt(state, event_desc):
     return prompt
 
 def get_ai_response(user_input, state, event_desc):
+    system_prompt = build_system_prompt(state, "") 
+    combined_content = ""
+
+    if event_desc:
+        combined_content += f"{event_desc}\n"
+    
+    if user_input:
+        if event_desc: 
+            combined_content += f"User also says: \"{user_input}\""
+        else:
+            combined_content += user_input
+    
+    if not combined_content:
+        combined_content = "(User stares at you silently)"
+
     try:
-        # 1. Build the Persona
-        system_prompt = build_system_prompt(state, event_desc)
-        
-        # 2. Call OpenAI
-        # (Later we will add RAG memory here)
         response = client.chat.completions.create(
-            model="gpt-4o-mini", # Or gpt-4o-mini for better cost/performance
+            model=os.getenv("MODEL", "gpt-4o-mini"), 
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_input if user_input else "(User stared at you silently)"}
+                {"role": "user", "content": combined_content}
             ],
             temperature=0.7,
             max_tokens=100
         )
-        
         return response.choices[0].message.content
 
     except Exception as e:
-        print(f"Error calling OpenAI: {e}")
-        return "Roar... (System Error: Brain not connected)"
+        print(f"LLM Error: {e}")
+        return "Roar? (Brain Connection Lost)"

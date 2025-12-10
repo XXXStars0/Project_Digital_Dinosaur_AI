@@ -49,14 +49,14 @@ class GameStateService:
             # [Neglect Penalty Check] Before resetting, check if stats were bad
             penalty_desc = ""
             if self.state["hunger"] <= 0:
-                self.state["affinity"] = max(0, self.state["affinity"] - 20)
+                self.state["affinity"] = max(0, self.state["affinity"] - 10)
                 self.state["mood"] = 0
                 penalty_desc = " Because it starved last night, it hates you now."
             
             # New day
             self.state["day"] += 1
             self.state["time_phase"] = "Morning"
-            self.state["hunger"] = max(0, self.state["hunger"] - 20) 
+            self.state["hunger"] = max(0, self.state["hunger"] - 10) 
             
             system_event_desc = (
                 f"(System: You turned off the lights. Day {self.state['day']} begins. "
@@ -64,7 +64,7 @@ class GameStateService:
             )
 
         elif action_type == "feed":
-            self.state["hunger"] = min(100, self.state["hunger"] + 30)
+            self.state["hunger"] = min(100, self.state["hunger"] + 25)
             self.state["affinity"] = min(100, self.state["affinity"] + 2)
             system_event_desc = "(System: You fed the pet. It looks satisfied.)"
             if self._advance_time():
@@ -79,7 +79,6 @@ class GameStateService:
 
         elif action_type == "chat":
             # Chatting does NOT advance time.
-            # But it builds small affinity (unless it's night, handled above).
             if current_time != "Night":
                 self.state["affinity"] = min(100, self.state["affinity"] + 1)
                 system_event_desc = f"(System: User is chatting with you. Time: {current_time}.)"

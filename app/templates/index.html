@@ -4,10 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Dinosaur AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <div class="game-container">
+        <div class="panel stats-panel">
+            <h2>🦖 <span id="pet-name">{{ initial_state.name }}</span></h2>
+            
+            <div class="stat-row">
+                <label>Day:</label> <span id="stat-day">{{ initial_state.day }}</span>
+            </div>
+            <div class="stat-row">
+                <label>Time:</label> <span id="stat-time">{{ initial_state.time_phase }}</span>
+            </div>
+            
+            <hr>
+
+            <div class="stat-row">
+                <label>Hunger: <span id="hunger-val">{{ initial_state.hunger }}</span></label> 
+                <div class="progress-bar">
+                    <div id="bar-hunger" style="width: {{ initial_state.hunger }}%;"></div>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <label>Mood: <span id="mood-val">{{ initial_state.mood }}</span></label> 
+                <div class="progress-bar">
+                    <div id="bar-mood" style="width: {{ initial_state.mood }}%;"></div>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <label>Affinity: <span id="affinity-val">{{ initial_state.affinity }}</span></label> 
+                <div class="progress-bar">
+                    <div id="bar-affinity" style="width: {{ initial_state.affinity }}%;"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button onclick="sendAction('feed')">🍖 Feed</button>
+                <button onclick="sendAction('pet')">🖐️ Pet</button>
+                <button onclick="sendAction('sleep')">🌙 Sleep</button>
+            </div>
+        </div>
+
+        <div class="display-area">
+    
+            <div class="dino-stage">
+                <img id="dino-img" src="{{ url_for('static', filename='images/dino_normal.png') }}" alt="Dino">
+            </div>
+            
+            <div class="chat-bubble" id="ai-response">
+                Roar! (I am ready to play!)
+            </div>
+
+        </div>
+
+        <div class="panel chat-panel">
+            <div id="chat-history">
+                </div>
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Say something...">
+                <button onclick="sendAction('chat')">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
