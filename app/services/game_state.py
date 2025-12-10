@@ -5,6 +5,7 @@ class GameStateService:
         Now includes logic for 'Time Consumption' and 'Neglect Penalties'.
         """
         self.state = {
+            "name": "Dino",
             "hunger": 50,          # 0-100
             "mood": 50,            # 0-100
             "affinity": 10,        # 0-100
@@ -13,6 +14,10 @@ class GameStateService:
         }
         
         self.time_cycle = ["Morning", "Afternoon", "Night"]
+        
+    def update_name(self, new_name):
+        self.state["name"] = new_name
+        return f"(System: Name changed to {new_name})"
 
     def _advance_time(self):
         current_index = self.time_cycle.index(self.state["time_phase"])
