@@ -1,13 +1,10 @@
-# 这是一个示例 Python 脚本。
+from flask import Flask, render_template
 
-# 按 Ctrl+F5 执行或将其替换为您的代码。
-# 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
+app = Flask(__name__)
 
-
-def print_hi(name):
-    # 在下面的代码行中使用断点来调试脚本。
-    print(f'Hi, {name}')  # 按 F9 切换断点。
-
+@app.route('/')
+def index():
+    return render_template('index.html', title='Welcome to Digital Dinosaur AI')
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    app.run(debug=True)
