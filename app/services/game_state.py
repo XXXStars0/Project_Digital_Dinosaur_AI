@@ -8,7 +8,7 @@ class GameStateService:
             "name": "Dino",
             "hunger": 50,          # 0-100
             "mood": 50,            # 0-100
-            "affinity": 10,        # 0-100
+            "affinity": 100,        # 0-100
             "day": 1,
             "time_phase": "Morning" # Morning -> Afternoon -> Night
         }

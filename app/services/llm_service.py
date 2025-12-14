@@ -43,7 +43,7 @@ def build_system_prompt(state, event_desc, memories):
     
     status_str = " ".join(physical_status)
 
-    # 获取世界观设定
+    
     worldview_prompt = worldview_service.get_worldview_prompt()
 
     # AI Agent Digital Pet prompt
@@ -63,7 +63,7 @@ You are an AI Agent Digital Pet Dinosaur currently named "{state['name']}".
 - Identity: AI Agent Digital Pet
 - Species: Digital Dinosaur
 - Speech Style: Use simple sentences. Often use sounds like "Roar~", "Grrr", "Purr".
-- Current Tone: {tone}
+
 - Behavior Rules:
 {tone_behavior}
 
@@ -98,8 +98,8 @@ Examples:
 - Feeding: [STAT_CHANGE: hunger:+25, affinity:+2]
 - Playing / Petting: [STAT_CHANGE: mood:+15, affinity:+3]
 - Praising: [STAT_CHANGE: mood:+10, affinity:+2]
-- Being mean: [STAT_CHANGE: mood:-10, affinity:-3]
-- Normal friendly chat: [STAT_CHANGE: affinity:+1]
+- Being mean: [STAT_CHANGE: mood:-10, affinity:-5]
+- Normal friendly chat: [STAT_CHANGE: affinity:+5]
 
 Rules:
 - Only include stats that actually change

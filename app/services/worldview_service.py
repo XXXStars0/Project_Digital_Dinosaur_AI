@@ -1,6 +1,5 @@
 """
-世界观设定服务
-管理NPC的世界观背景设定，确保回答的一致性
+Worldview Service
 """
 import json
 import os
@@ -8,20 +7,20 @@ from datetime import datetime
 
 
 class WorldviewService:
-    """世界观设定管理类"""
+    """Worldview Service"""
     
     def __init__(self, worldview_file='worldview.json'):
         """
-        初始化世界观服务
+        init World Service
         
         Args:
-            worldview_file: 世界观设定文件路径
+            worldview_file: World View Path
         """
         self.worldview_file = worldview_file
         self.worldview = self._load_worldview()
     
     def _load_worldview(self):
-        """加载世界观设定"""
+        """Load World Service"""
         default_worldview = {
             "world_name": "Digital Pet World",
             "background": """
@@ -98,24 +97,23 @@ class WorldviewService:
             "world_events": []  # Can store historical events in the worldview
         }
         
-        # 尝试加载自定义世界观文件
+        # Load the define of worldview
         if os.path.exists(self.worldview_file):
             try:
                 with open(self.worldview_file, 'r', encoding='utf-8') as f:
                     custom_worldview = json.load(f)
-                    # 合并默认设定和自定义设定
                     default_worldview.update(custom_worldview)
             except Exception as e:
-                print(f"[Worldview] 加载自定义世界观失败，使用默认设定: {e}")
+                print(f"[Worldview] Failed to load custom world settings; default settings applied.: {e}")
         
         return default_worldview
     
     def get_worldview_prompt(self):
         """
-        获取格式化的世界观提示词
+        Obtain formatted world-building prompts
         
         Returns:
-            str: 格式化的世界观设定文本
+            str: Formatted Worldbuilding Text
         """
         wv = self.worldview
         
@@ -175,10 +173,10 @@ Things you don't know about:
     
     def add_world_event(self, event_description):
         """
-        添加世界观中的历史事件（用于增强一致性）
+        Add historical events to the world-building (to enhance consistency)
         
         Args:
-            event_description: 事件描述
+            event_description: Event Description
         """
         event = {
             "description": event_description,
@@ -189,35 +187,35 @@ Things you don't know about:
     
     def get_recent_events(self, n=3):
         """
-        获取最近的世界观事件
+        Retrieve recent world events
         
         Args:
-            n: 返回的事件数量
+            n: Number of events to return
         
         Returns:
-            list: 最近的事件列表
+            list: List of recent events
         """
         return self.worldview['world_events'][-n:] if self.worldview['world_events'] else []
     
     def _save_worldview(self):
-        """保存世界观设定到文件"""
+        """Save the world setting to a file"""
         try:
             with open(self.worldview_file, 'w', encoding='utf-8') as f:
                 json.dump(self.worldview, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            print(f"[Worldview] 保存世界观失败: {e}")
+            print(f"[Worldview] Failed to save the world view: {e}")
     
     def update_worldview(self, updates):
         """
-        更新世界观设定
+        Update the world-building setting
         
         Args:
-            updates: 要更新的字段字典
+            updates: Field Dictionary to be Updated
         """
         self.worldview.update(updates)
         self._save_worldview()
 
 
-# 创建全局世界观服务实例
+# Create a global world view service instance
 worldview_service = WorldviewService()
 
