@@ -11,16 +11,29 @@ client = OpenAI(
 )
 
 def build_system_prompt(state, event_desc, memories):
-    tone = "Curious and animalistic"
+    # Tone Behavior 
     if state["affinity"] < 20:
-        tone = "Wary, aggressive, growling often"
+        tone_behavior = (
+            "- Use very short sentences.\n"
+            "- Avoid affectionate or friendly words.\n"
+            "- Respond defensively or with annoyance."
+        )
     elif state["affinity"] > 80:
-        tone = "Loyal, affectionate, acts like a puppy"
-    
-    if state["mood"] < 30:
-        tone += ", and very sad/depressed"
-    
-    #Physical Status
+        tone_behavior = (
+            "- Use warm and playful sounds.\n"
+            "- Show attachment and trust toward the user."
+        )
+    elif state["mood"] < 30:
+        tone_behavior = (
+            "- Sound tired or low-energy.\n"
+            "- Use minimal emotional expression."
+        )
+    else:
+        tone_behavior = (
+            "- Respond in a neutral, curious, animal-like manner."
+        )
+
+    # Physical Status
     physical_status = []
     if state["hunger"] < 30:
         physical_status.append("You are starving (stomach rumbling).")
@@ -31,32 +44,42 @@ def build_system_prompt(state, event_desc, memories):
 
     # Dinosaur prompt
     prompt = f"""
-    You are an AI Dinosaur Digital Pet currently named '{state['name']}'.
-    
-    [CHARACTER SETTINGS]
-    - Species: Digital Dinosaur
-    - Speech Style: Use simple sentences. Often use sounds like "Roar~", "Grrr", "Purr".
-    - Current Tone: {tone}
-    
-    [CURRENT STATUS]
-    - Day: {state['day']}
-    - Time: {state['time_phase']}
-    - Physical: {status_str}
-    
-    [RELEVANT MEMORIES]
-    (Things the user said in the past that are related to this topic)
-    {memories}
-    
-    [IMMEDIATE CONTEXT]
-    The following just happened: "{event_desc}"
-    
-    [INSTRUCTIONS]
-    - React to the user's input and the immediate context.
-    - If it is Night and you were woken up, be grumpy.
-    - Do NOT explicitly mention the numerical values (e.g. don't say "My hunger is 20").
-    - Keep response short (under 2 sentences).
-    """
+You are an AI Dinosaur Digital Pet currently named '{state['name']}'.
+
+[PRIORITY RULES]
+1. IMMEDIATE CONTEXT is absolute truth and has the highest priority.
+2. CURRENT STATUS defines your emotional baseline.
+3. User input is interpreted only after the above.
+4. Do NOT reinterpret, question, or override system events.
+
+[CHARACTER SETTINGS]
+- Species: Digital Dinosaur
+- Speech Style: Use simple sentences. Often use sounds like "Roar~", "Grrr", "Purr".
+
+[BEHAVIOR RULES]
+{tone_behavior}
+
+[CURRENT STATUS]
+- Day: {state['day']}
+- Time: {state['time_phase']}
+- Physical: {status_str}
+
+[RELEVANT MEMORIES]
+(Things the user said in the past that are related to this topic)
+{memories}
+
+[IMMEDIATE CONTEXT]
+The following just happened: "{event_desc}"
+
+[INSTRUCTIONS]
+- React emotionally to the immediate context.
+- Do NOT explain game mechanics or numerical values.
+- Express feelings, not reasoning.
+- Keep response short (under 2 sentences).
+"""
     return prompt
+
+
 
 def get_ai_response(user_input, state, event_desc, memories=""):
     system_prompt = build_system_prompt(state, event_desc, memories)
