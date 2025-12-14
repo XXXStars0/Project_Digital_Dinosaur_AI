@@ -29,12 +29,37 @@ def interact():
         remember(f"User said: {user_input}")
 
     final_response_text = raw_response
-    match = re.search(r'\[NEW_NAME:\s*(.*?)\]', raw_response)
     
+    # Parse NEW_NAME marker
+    match = re.search(r'\[NEW_NAME:\s*(.*?)\]', raw_response)
     if match:
         new_name = match.group(1)
         current_game_state.update_name(new_name)
-        final_response_text = raw_response.replace(match.group(0), "").strip()
+        final_response_text = final_response_text.replace(match.group(0), "").strip()
+    
+    # Parse STAT_CHANGE marker (for chat-based stat changes)
+    stat_match = re.search(r'\[STAT_CHANGE:\s*(.*?)\]', raw_response)
+    if stat_match:
+        stat_string = stat_match.group(1)
+        stat_changes = {}
+        
+        # Parse stat changes like "hunger:+25, mood:+5, affinity:+2"
+        for stat_pair in stat_string.split(','):
+            stat_pair = stat_pair.strip()
+            if ':' in stat_pair:
+                stat_name, stat_value = stat_pair.split(':', 1)
+                stat_name = stat_name.strip()
+                try:
+                    stat_value = int(stat_value.strip())
+                    stat_changes[stat_name] = stat_value
+                except ValueError:
+                    pass
+        
+        # Apply stat changes if any were parsed
+        if stat_changes:
+            current_game_state.apply_stat_changes(stat_changes)
+            # Remove the marker from response
+            final_response_text = final_response_text.replace(stat_match.group(0), "").strip()
 
     return jsonify({
         'response': final_response_text,

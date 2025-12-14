@@ -13,6 +13,7 @@ This project demonstrates the integration of **game state management** (Hunger, 
 
 ### ✨ Key Features
 - **🧠 Long-Term Memory (RAG):** Powered by **ChromaDB**, the Dino remembers facts you told it (e.g., your name, favorite food) and references them in future conversations.
+- **🌍 Worldview Consistency:** The Dino has a consistent worldview setting that shapes how it interprets and responds to everything. It maintains character consistency throughout conversations.
 - **🎭 Dynamic Persona:** The AI's tone changes based on game stats (Hunger, Mood, Time of Day). A hungry Dino is grumpy; a well-fed one is cheerful.
 - **🕰️ Simulated Time System:** Includes a Day/Night cycle. Waking the Dino up at night has consequences!
 - **❤️ Relationship Evolution:** Affinity levels determine how intimate or cold the Dino acts towards you.
@@ -69,7 +70,25 @@ BASE_URL=your_base_url_here
 MODEL=your_model_name_here
 ```
 
-### 5. Run the Application
+### 5. (Optional) Customize Worldview Settings
+The Dino has a default worldview that defines its background, knowledge, and personality. You can customize it by:
+
+1. Copy the example file:
+```bash
+cp worldview.json.example worldview.json
+```
+
+2. Edit `worldview.json` to customize:
+   - World background and lore
+   - Character background and beliefs
+   - Rules and limitations
+   - Knowledge base (what the Dino knows/doesn't know)
+   - Speech patterns
+   - Personality traits
+
+The worldview ensures the Dino maintains consistent character behavior and interprets everything through its unique perspective.
+
+### 6. Run the Application
 ```bash
 python run.py
 ```

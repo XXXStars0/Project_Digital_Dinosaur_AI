@@ -85,6 +85,20 @@ class GameStateService:
 
         return self.state, system_event_desc
     
+    def apply_stat_changes(self, changes):
+        """
+        Apply stat changes from chat interactions.
+        
+        Args:
+            changes: dict with keys 'hunger', 'mood', 'affinity' and int values
+        """
+        if 'hunger' in changes:
+            self.state["hunger"] = max(0, min(100, self.state["hunger"] + changes['hunger']))
+        if 'mood' in changes:
+            self.state["mood"] = max(0, min(100, self.state["mood"] + changes['mood']))
+        if 'affinity' in changes:
+            self.state["affinity"] = max(0, min(100, self.state["affinity"] + changes['affinity']))
+    
     def get_state(self):
         return self.state
 
