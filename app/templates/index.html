@@ -44,9 +44,9 @@
             </div>
 
             <div class="controls">
-                <button onclick="sendAction('feed')">🍖 Feed</button>
-                <button onclick="sendAction('pet')">🖐️ Pet</button>
-                <button onclick="sendAction('sleep')">🌙 Sleep</button>
+                <button onclick="sendAction('feed')" id="btn-feed" title="Feed your pet (F)">🍖 Feed</button>
+                <button onclick="sendAction('pet')" id="btn-pet" title="Pet your pet (P)">🖐️ Pet</button>
+                <button onclick="sendAction('sleep')" id="btn-sleep" title="Put to sleep (S)">🌙 Sleep</button>
             </div>
         </div>
 
@@ -63,11 +63,15 @@
         </div>
 
         <div class="panel chat-panel">
+            <div class="chat-header">
+                <h3>💬 Chat</h3>
+                <button onclick="clearChatHistory()" class="btn-clear" title="Clear chat history">🗑️ Clear</button>
+            </div>
             <div id="chat-history">
-                </div>
+            </div>
             <div class="chat-input-area">
-                <input type="text" id="user-input" placeholder="Say something...">
-                <button onclick="sendAction('chat')">Send</button>
+                <input type="text" id="user-input" placeholder="Say something... (Press Enter to send)" autocomplete="off">
+                <button onclick="sendAction('chat')" id="btn-send">Send</button>
             </div>
         </div>
     </div>
